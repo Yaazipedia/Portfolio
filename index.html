@@ -24,6 +24,49 @@
     <!--==================== Animate on scroll CDN ====================-->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
+    <style>
+        /* CSS for the skill progress bars in the technical skills section */
+        .skills__bar {
+          background-color: #e0e0e0;
+          width: 100%;
+          height: 5px;
+          border-radius: 5px;
+          margin-top: 5px;
+        }
+        .skills__percentage {
+          display: block;
+          height: 100%;
+          background-color: #3498db;
+          border-radius: 5px;
+        }
+    
+        /* Fix for company logos */
+        .experience__logo {
+          max-width: 110px;
+          width: 100%;
+          height: auto;
+          margin: 0.5rem 0;
+        }
+    
+        /* Style adjustments for custom arrow symbols in projects */
+        .swiper-button-next::after,
+        .swiper-button-prev::after {
+          font-size: 2rem;
+          font-weight: bold;
+        }
+        .swiper-button-next::after {
+          content: ">";
+        }
+        .swiper-button-prev::after {
+          content: "<";
+        }
+    
+        /* Reduce spacing between Email, Phone, and GitHub in the contact section */
+        .contact__information > div {
+          margin-bottom: 0.5rem; /* Adjust as needed */
+        }
+    </style>
+
 </head>
 
 <body>
@@ -765,6 +808,7 @@
                 <div class="services__content">
                     <div>
                         <i class="uil uil-web-grid services__icon"></i>
+                        <img src="assets/img/zs.png" class="skills_logo" alt="zs_logo" class="experience_logo">
                         <h3 class="services__title">Senior Data Engineer <br> @ AbbVie, Janssen, Gilead | ZS Associates</h3>
                     </div>
 
@@ -808,6 +852,7 @@
                 <div class="services__content">
                     <div>
                         <i class="uil uil-arrow services__icon"></i>
+                        <img src="assets/img/sp.png" class="skills_logo" alt="sp_logo" class="experience_logo">
                         <h3 class="services__title">Data Engineer <br> @ SP Global | LTIMindtree</h3>
                     </div>
 
