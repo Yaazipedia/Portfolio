@@ -827,8 +827,7 @@ function App() {
             {/* ===== end rotating role ===== */}
 
             <p className="hero-tagline">
-              Turning messy, large-scale data into systems that work and
-              insights that matter.
+              Most data problems aren't data problems. I find the real ones and solve those.
             </p>
 
             <div className="hero-buttons">
