@@ -1,5 +1,5 @@
 // /mnt/data/App.tsx
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import heroImg from "./assets/hero.png";
 import aboutImg from "./assets/about.jpeg";
@@ -243,6 +243,36 @@ function SudokuModal({
   );
 }
 
+function AnimatedCounter({ target, suffix = "", decimals = 0 }: { 
+  target: number; suffix?: string; decimals?: number 
+}) {
+  const [value, setValue] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !started.current) {
+        started.current = true;
+        const duration = 1600;
+        const start = performance.now();
+        const tick = (now: number) => {
+          const p = Math.min((now - start) / duration, 1);
+          const ease = 1 - Math.pow(1 - p, 3);
+          setValue(parseFloat((target * ease).toFixed(decimals)));
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      }
+    }, { threshold: 0.5 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [target, decimals]);
+
+  return <span ref={ref}>{value.toFixed(decimals)}{suffix}</span>;
+}
 interface Experience {
   id: string;
   role: string;
@@ -847,6 +877,26 @@ function App() {
 
             <div className="hero-stats">
               <div className="stat-item">
+                <span className="stat-number">
+                  <AnimatedCounter target={4} suffix="+" />
+                </span>
+                <span className="stat-label">Years Experience</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-number">
+                  <AnimatedCounter target={2} suffix="B+" />
+                </span>
+                <span className="stat-label">Records Processed</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-number">
+                  <AnimatedCounter target={3.8} decimals={1} />
+                </span>
+                <span className="stat-label">GPA at IU</span>
+              </div>
+            </div>
+            {/* <div className="hero-stats">
+              <div className="stat-item">
                 <span className="stat-number">4+</span>
                 <span className="stat-label">Years Experience</span>
               </div>
@@ -859,7 +909,7 @@ function App() {
                 <span className="stat-label">GPA at IU</span>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="hero-right">
             <div className="image-container">
