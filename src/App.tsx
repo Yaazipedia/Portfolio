@@ -908,8 +908,8 @@ function App() {
                 <span className="stat-number">3.8</span>
                 <span className="stat-label">GPA at IU</span>
               </div>
-            </div>
-          </div> */}
+            </div> */}
+          </div> 
 
           <div className="hero-right">
             <div className="image-container">
