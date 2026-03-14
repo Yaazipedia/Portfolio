@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import heroImg from "./assets/hero.png";
-import aboutImg from "./assets/about.jpeg";
+import aboutImg from "./assets/about3.jpeg";
 import fplImg from "./assets/projects/fpl.png";
 import chronicImg from "./assets/img/chronickidney.png";
 import stegImg from "./assets/img/stegno.png";
@@ -951,7 +951,7 @@ function App() {
               </p>
             </div>
 
-            <div className="about-image full-width">
+            <div className="about-image fill-width">
               <div className="portrait-container">
                 <img src={aboutImg} alt="Professional portrait" />
               </div>
