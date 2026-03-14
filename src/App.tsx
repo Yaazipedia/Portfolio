@@ -129,114 +129,81 @@ function Navbar({ activeSection }: { activeSection: string }) {
   );
 }
 
-function SudokuModal({
-  isOpen,
-  onClose,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-}) {
-  const [grid, setGrid] = useState<(number | null)[][]>([
-    [5, 3, null, null, 7, null, null, null, null],
-    [6, null, null, 1, 9, 5, null, null, null],
-    [null, 9, 8, null, null, null, null, 6, null],
-    [8, null, null, null, 6, null, null, null, 3],
-    [4, null, null, 8, null, 3, null, null, 1],
-    [7, null, null, null, 2, null, null, null, 6],
-    [null, 6, null, null, null, null, 2, 8, null],
-    [null, null, null, 4, 1, 9, null, null, 5],
-    [null, null, null, null, 8, null, null, 7, 9],
-  ]);
-  const [selectedCell, setSelectedCell] = useState<[number, number] | null>(
-    null,
-  );
+const PUZZLE: (number | null)[][] = [
+  [5, 3, null, null, 7, null, null, null, null],
+  [6, null, null, 1, 9, 5, null, null, null],
+  [null, 9, 8, null, null, null, null, 6, null],
+  [8, null, null, null, 6, null, null, null, 3],
+  [4, null, null, 8, null, 3, null, null, 1],
+  [7, null, null, null, 2, null, null, null, 6],
+  [null, 6, null, null, null, null, 2, 8, null],
+  [null, null, null, 4, 1, 9, null, null, 5],
+  [null, null, null, null, 8, null, null, 7, 9],
+];
+const SOLUTION: number[][] = [
+  [5,3,4,6,7,8,9,1,2],[6,7,2,1,9,5,3,4,8],[1,9,8,3,4,2,5,6,7],
+  [8,5,9,7,6,1,4,2,3],[4,2,6,8,5,3,7,9,1],[7,1,3,9,2,4,8,5,6],
+  [9,6,1,5,3,7,2,8,4],[2,8,7,4,1,9,6,3,5],[3,4,5,2,8,6,1,7,9]
+];
+
+function SudokuModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const [grid, setGrid] = useState(PUZZLE.map(r => [...r]));
+  const [selectedCell, setSelectedCell] = useState<[number, number] | null>(null);
   const [timer, setTimer] = useState(0);
+  const [solved, setSolved] = useState(false);
 
   useEffect(() => {
-    let interval: any;
-    if (isOpen) {
-      interval = setInterval(() => {
-        setTimer((t) => t + 1);
-      }, 1000);
-    } else {
-      setTimer(0);
-      clearInterval(interval);
-    }
+    if (!isOpen) { setGrid(PUZZLE.map(r => [...r])); setTimer(0); setSolved(false); setSelectedCell(null); return; }
+    const interval = setInterval(() => setTimer(t => t + 1), 1000);
     return () => clearInterval(interval);
   }, [isOpen]);
 
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins.toString().padStart(2, "0")}:${secs
-      .toString()
-      .padStart(2, "0")}`;
-  };
-
-  const handleCellClick = (row: number, col: number) => {
-    setSelectedCell([row, col]);
-  };
+  const formatTime = (s: number) => `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
 
   const handleNumberInput = (num: number | null) => {
-    if (selectedCell) {
-      const [r, c] = selectedCell;
-      const newGrid = [...grid];
-      newGrid[r][c] = num;
-      setGrid(newGrid);
-    }
+    if (!selectedCell) return;
+    const [r, c] = selectedCell;
+    if (PUZZLE[r][c] !== null) return;
+    const newGrid = grid.map(row => [...row]);
+    newGrid[r][c] = num;
+    setGrid(newGrid);
+    const isSolved = newGrid.every((row, ri) => row.every((v, ci) => v === SOLUTION[ri][ci]));
+    if (isSolved) setSolved(true);
   };
 
   if (!isOpen) return null;
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
-      <div className="sudoku-modal" onClick={(e) => e.stopPropagation()}>
+      <div className="sudoku-modal" onClick={e => e.stopPropagation()}>
         <div className="modal-header">
-          <div className="modal-title">
-            <span className="dice">🎲</span>
-            <h2>Sudoku Challenge</h2>
-          </div>
+          <div className="modal-title"><span className="dice">🎲</span><h2>Sudoku Challenge</h2></div>
           <p className="modal-subtitle">Can you beat Yashwi's coffee time?</p>
         </div>
-
-        <div className="modal-timer">{formatTime(timer)}</div>
-
+        <div className="modal-timer" style={{ color: solved ? "#2eba75" : "var(--accent)" }}>{formatTime(timer)}</div>
+        {solved && <div className="sudoku-win">🎉 Solved! Nice work.</div>}
         <div className="sudoku-grid">
           {grid.map((row, rIdx) => (
             <div key={rIdx} className="grid-row">
-              {row.map((cell, cIdx) => (
-                <div
-                  key={cIdx}
-                  className={`grid-cell ${
-                    selectedCell?.[0] === rIdx && selectedCell?.[1] === cIdx
-                      ? "selected"
-                      : ""
-                  } ${(rIdx + 1) % 3 === 0 && rIdx < 8 ? "thick-bottom" : ""} ${
-                    (cIdx + 1) % 3 === 0 && cIdx < 8 ? "thick-right" : ""
-                  }`}
-                  onClick={() => handleCellClick(rIdx, cIdx)}
-                >
-                  {cell}
-                </div>
-              ))}
+              {row.map((cell, cIdx) => {
+                const isGiven = PUZZLE[rIdx][cIdx] !== null;
+                const isWrong = cell !== null && !isGiven && cell !== SOLUTION[rIdx][cIdx];
+                return (
+                  <div
+                    key={cIdx}
+                    className={`grid-cell ${selectedCell?.[0] === rIdx && selectedCell?.[1] === cIdx ? "selected" : ""} ${isGiven ? "given" : ""} ${isWrong ? "wrong" : ""} ${(rIdx + 1) % 3 === 0 && rIdx < 8 ? "thick-bottom" : ""} ${(cIdx + 1) % 3 === 0 && cIdx < 8 ? "thick-right" : ""}`}
+                    onClick={() => !isGiven && setSelectedCell([rIdx, cIdx])}
+                  >{cell}</div>
+                );
+              })}
             </div>
           ))}
         </div>
-
         <div className="number-pad">
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
-            <button key={num} onClick={() => handleNumberInput(num)}>
-              {num}
-            </button>
-          ))}
-          <button className="clear-btn" onClick={() => handleNumberInput(null)}>
-            ✕
-          </button>
+          {[1,2,3,4,5,6,7,8,9].map(n => <button key={n} onClick={() => handleNumberInput(n)}>{n}</button>)}
+          <button className="clear-btn" onClick={() => handleNumberInput(null)}>✕</button>
         </div>
-
-        <button className="modal-close-btn" onClick={onClose}>
-          Close
-        </button>
+        <button className="modal-close-btn" onClick={onClose}>Close</button>
       </div>
     </div>
   );
@@ -1146,7 +1113,7 @@ function App() {
           </div>
 
           <footer className="footer-credits">
-            <p>© 2025 Yashwi Passary · Data Scientist · Built with ❤️</p>
+            <p>© 2025 Yashwi Passary · Data Guru</p>
           </footer>
         </section>
 
