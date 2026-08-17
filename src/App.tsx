@@ -58,6 +58,7 @@ import ecardRef from "./assets/img/ecard.png";
 
 // Cert Images
 import hackathonCert from "./assets/img/hackathonCert.jpeg";
+import microsoftHack from "./assets/img/microsoftHack.jpeg";
 import performanceCert from "./assets/img/performance.jpg";
 import aiCert from "./assets/img/datacamp.png";
 import mlCert from "./assets/img/Machine Learning using Python.jpeg";
@@ -310,9 +311,9 @@ const experiences: Experience[] = [
   },
   {
     id: "project990",
-    role: "Data Scientist",
+    role: "Data Scientist(Part-Time)",
     company: "Project 990",
-    duration: "August 2025 – Present",
+    duration: "August 2025 – May 2026",
     type: "Part Time",
     shortDesc:
       "At Project 990, I am developing machine learning and NLP solutions to improve nonprofit data quality and classification. My work focuses on building scalable systems for entity resolution and mission-based organization classification. By combining transformer models, large language models, and similarity-based matching techniques, I help automate the identification of duplicate organizations and improve the accuracy of mapping nonprofit mission statements to UN Sustainable Development Goals (SDGs).",
@@ -593,7 +594,7 @@ interface Education {
 const educationData: Education[] = [
   {
     id: "iu",
-    university: "Indiana University — Bloomington",
+    university: "Indiana University, Bloomington",
     degree: "Master's in Data Science",
     duration: "2024 – 2026",
     gpa: "3.9",
@@ -633,10 +634,17 @@ interface Certificate {
 const certificatesData: Certificate[] = [
   {
     id: "ncaa-challenge",
-    title: "1st Place — NCAA Men's Analytics Challenge, 2026",
+    title: "1st Place in NCAA Men's Analytics Challenge, 2026",
     issuer: "NCAA Tournament Seed Prediction",
     date: "Apr 2026",
     image: hackathonCert,
+  },
+  {
+    id: "agentathon",
+    title: "2nd Place in Microsoft Agent-a-Thon",
+    issuer: "CareRelay",
+    date: " Mar 2026",
+    image: microsoftHack,
   },
   {
     id: "best-perf",
@@ -906,7 +914,7 @@ function App() {
             <div className="hero-stats">
               <div className="stat-item">
                 <span className="stat-number">
-                  <AnimatedCounter target={4} suffix="+" />
+                  <AnimatedCounter target={5} suffix="+" />
                 </span>
                 <span className="stat-label">Years Experience</span>
               </div>
@@ -925,7 +933,7 @@ function App() {
             </div>
             {/* <div className="hero-stats">
               <div className="stat-item">
-                <span className="stat-number">4+</span>
+                <span className="stat-number">5+</span>
                 <span className="stat-label">Years Experience</span>
               </div>
               <div className="stat-item">
@@ -954,7 +962,7 @@ function App() {
 
               <div className="bio-paras">
                 <p>
-                  I'm a Data Scientist and Engineer who's spent 4+ years turning
+                  I'm a Data Scientist and Engineer who's spent 5+ years turning
                   messy, large-scale data into systems that actually work and
                   insights that actually matter. My journey started at
                   LTIMindtree automating ETL pipelines processing 2B+ records,
