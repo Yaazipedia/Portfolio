@@ -10,6 +10,7 @@ import meetsmartImg from "./assets/projects/meetsmart.png";
 import project990Logo from "./assets/img/project990.jpeg";
 import zsLogo from "./assets/img/zs.png";
 import LTILogo from "./assets/img/LTI.png";
+import HFHLogo from "./assets/img/hfh.jpg";
 import gatxLogo from "./assets/img/gatx.jpeg";
 
 // Skill Logos
@@ -56,6 +57,7 @@ import kritikaRef from "./assets/img/kritika.png";
 import ecardRef from "./assets/img/ecard.png";
 
 // Cert Images
+import hackathonCert from "./assets/img/hackathonCert.jpeg";
 import performanceCert from "./assets/img/performance.jpg";
 import aiCert from "./assets/img/datacamp.png";
 import mlCert from "./assets/img/Machine Learning using Python.jpeg";
@@ -287,6 +289,25 @@ interface Experience {
 }
 
 const experiences: Experience[] = [
+  {
+    id: "henry-ford",
+    role: "Senior Data Engineer",
+    company: "Henry Ford Health",
+    duration: "June 2026 – Present",
+    type: "Full Time",
+    shortDesc:
+      "At Henry Ford Health, I automate daily payer and insurance claims data pipelines using Fabric and SSMS to convert complex vendor data into contract classifications, risk categories, and Power BI insights for more than 600K members. The work supports operational reporting and helps reduce manual processing time as data volumes continue to scale.",
+    overview:
+      "Automated payer and insurance claims data pipelines for member and claims reporting at scale.",
+    contributions: [
+      "Automated daily payer and insurance claims data pipelines using Fabric and SSMS, converting complex vendor feeds into contract classifications and risk categories for 600K+ members",
+      "Built and validated production reporting solutions using Epic Clarity and Caboodle data for Medicare, Medicaid, and MMP reporting, improving data reliability for payer and operational stakeholders",
+      "Reduced manual processing time by streamlining intake, transformation, and reporting workflows across high-volume healthcare datasets",
+      "Enabled timely Power BI insights for member and claims-level reporting across payer operations and business stakeholders",
+    ],
+    tags: ["Fabric", "SSMS", "Power BI", "Epic Clarity", "Healthcare Data"],
+    logo: HFHLogo,
+  },
   {
     id: "project990",
     role: "Data Scientist",
@@ -575,7 +596,7 @@ const educationData: Education[] = [
     university: "Indiana University — Bloomington",
     degree: "Master's in Data Science",
     duration: "2024 – 2026",
-    gpa: "3.8",
+    gpa: "3.9",
   },
   {
     id: "nsec",
@@ -610,6 +631,13 @@ interface Certificate {
 }
 
 const certificatesData: Certificate[] = [
+  {
+    id: "ncaa-challenge",
+    title: "1st Place — NCAA Men's Analytics Challenge, 2026",
+    issuer: "NCAA Tournament Seed Prediction",
+    date: "Apr 2026",
+    image: hackathonCert,
+  },
   {
     id: "best-perf",
     title: "Best Performance in Digital Products Solution",
@@ -890,7 +918,7 @@ function App() {
               </div>
               <div className="stat-item">
                 <span className="stat-number">
-                  <AnimatedCounter target={3.8} decimals={1} />
+                  <AnimatedCounter target={3.9} decimals={1} />
                 </span>
                 <span className="stat-label">GPA at IU</span>
               </div>
@@ -940,7 +968,7 @@ function App() {
                   a major M&A initiative and built an entity matching pipeline
                   resolving 100k+ duplicate records at 88% accuracy. Now
                   finishing my Master's in Data Science at Indiana University
-                  (GPA 3.8), I'm most excited about ML in healthcare,
+                  (GPA 3.9), I'm most excited about ML in healthcare,
                   LLM-powered workflows, and graph-based modeling.
                 </p>
               </div>
